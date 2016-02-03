@@ -14,6 +14,7 @@ class PlayerStateDecorator :
     def position_bal(self) : 
         return self.state.ball.position
         
+        
     def position_player(self):
         return self.state.player_state(self.id_team, self.id_player).position  
         
@@ -77,62 +78,43 @@ class PlayerStateDecorator :
             return self.shoot_rand() 
         else :
             return self.stop()
-            
-            
-            
-z = """      ############### suivre la balle #################################"
-def suivre_bal( state , id_team, id_player):
-    
-    bal = state.ball.position # position bal 
-    p = state.player_state(id_team, id_player)    # position joueur             
-    return SoccerAction(bal - p.position,Vector2D(x=0,y=0)) # no shoot
-      
-    ###################################################################
-    
-    ###################### tirer la balle #############################
-"""
-u = """def shoot_bal(mystate):
-    if (mystate.id_team==1):
-        if mystate.peux_shooter():
-            return mystate.shoot_vers_but()"""
-            
 
-zz = """def shoot_bal( state , id_team, id_player):
-     "
-     bal = state.ball.position
-     p = state.player_state(id_team, id_player)
-     if( id_team == 1):
-         if(( p.position.distance(bal) < settings.PLAYER_RADIUS + settings.BALL_RADIUS)) : #distance of bal + can_shoot
-             return SoccerAction(bal-p.position ,Vector2D(settings.GAME_WIDTH , (settings.GAME_HEIGHT)/2) - p.position ) #shoot vers cage
-         else :
-             return SoccerAction() #stop
-     else :
-         return SoccerAction(bal-p.position, Vector2D(0, (settings.GAME_HEIGHT)/2) - p.position)
-    ####################################################################       
-############################ tire d'un defenseur ###############################
-       
-def shoot_bal_def(state, id_team, id_player):
-    
-    bal = state.ball
-    p = state.player_state(id_team, id_player)
-    
-    if( id_team == 1):
-        a = random.uniform(0,1)-0.5 
-        u = (p.position.x*p.position.x) + (settings.GAME_HEIGHT/2 - p.position.y)*(settings.GAME_HEIGHT/2 - p.position.y) 
-        d = math.sqrt(u)
-        v = Vector2D(angle = a , norm = d )
-        return SoccerAction(bal.position-p.position, v)
-    else :
-        a = random.uniform(2,4) 
-        u = (p.position.x*p.position.x) + (settings.GAME_HEIGHT/2 - p.position.y)*(settings.GAME_HEIGHT/2 - p.position.y) 
-        d = math.sqrt(u)
-        v = Vector2D(angle = a , norm = d )
-        return SoccerAction(bal.position-p.position, v)
+    def go_to_the_middle(self):
+        v = Vector2D(settings.GAME_WIDTH/2,settings.GAME_HEIGHT/2.)
+        return self.retour_position(v)
+            
+    def go_to_attack(self):
+        v = Vector2D(settings.GAME_WIDTH*3/4,settings.GAME_HEIGHT/2.)
+        return self.retour_position(v)
         
-    ######################################################################################
-        
-############################## retour a une position donnee ##########################
-def retour_position( state , id_team , id_player ,v):
-        return SoccerAction(v-state.player_state(id_team, id_player).position,Vector2D())
+    def go_to_defence(self):
+        v= Vector2D(settings.GAME_WIDTH*1/4,settings.GAME_HEIGHT/2.)
+        return self.retour_position(v)
 
-########################################################################################## """
+    def go_to_goal(self):
+        v= Vector2D(0,settings.GAME_HEIGHT/2.)
+        return self.retour_position(v)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

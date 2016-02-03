@@ -2,5 +2,5 @@ from soccersimulator import SoccerTeam
 from Strategie import *
 from soccersimulator import  Player 
 
-team1 = SoccerTeam("JSK",[Player("def",defense_Strategy()),Player("att",attaque_Strategy())])
-team2 = SoccerTeam("USMA",[Player("t2j1",Test()),Player("az",defense_Strategy())])
+team1 = SoccerTeam("JSK",[Player("HAL",defense_Strategy()),Player("MBO",goal_strat()),Player("SLI",attaquant_de_pointe()),Player("MEH",milieu())])
+team2 = SoccerTeam("USMA",[Player("t2j1",Test()),Player("az",defense_Strategy()),Player("assz",defense_Strategy()),Player("aaaaz",defense_Strategy())])
