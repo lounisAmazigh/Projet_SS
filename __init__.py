@@ -1,1 +1,1 @@
-from team import team1 , team2
+from Team import team1 , team2
