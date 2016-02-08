@@ -17,7 +17,7 @@ def attaquant1(Mystate):
 # ATTAQUE EN POINTE 
        
 def attaque_pointe(Mystate):
-    if(Mystate.position_bal().x >=  (settings.GAME_WIDTH*3)/4 ) or Mystate.position_bal().x == settings.GAME_WIDTH / 2  :
+    if(Mystate.position_bal().x >=  (settings.GAME_WIDTH*2.5)/4 ) or Mystate.position_bal().x == settings.GAME_WIDTH / 2  :
         return Mystate.shoot_to_cage_t1() + Mystate.suivre_bal()
         
     elif (Mystate.position_bal().x > settings.GAME_WIDTH / 2 ) :
@@ -64,6 +64,14 @@ def goal(Mystate):
         
      else :
         return Mystate.go_to_goal()
+        
+def goal2(Mystate):
+    
+     if( Mystate.position_bal().x > settings.GAME_WIDTH *3.5/4 ) :
+        return Mystate.shoot_to_cage_t2() + Mystate.suivre_bal()
+        
+     else :
+        return Mystate.go_to_goal2()
     
     
     

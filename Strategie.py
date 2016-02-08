@@ -69,8 +69,10 @@ class goal_strat(BaseStrategy):
     def compute_strategy(self , state , id_team , id_player ):
         Mystate = PlayerStateDecorator(state , id_team , id_player) 
         
-        return goal(Mystate)
-        
+        if(Mystate.id_team == 1):
+            return goal(Mystate)
+        else:
+            return goal2(Mystate)
 
 
 
