@@ -74,9 +74,6 @@ def goal2(Mystate):
         return Mystate.go_to_goal2()
     
     
-    
-    
-    
 # DEFENSE BASIC T2
 def defenseur2(Mystate):
     if( Mystate.position_bal().x > settings.GAME_WIDTH *3/4 ) :
@@ -89,6 +86,21 @@ def defenseur2(Mystate):
         return Mystate.suivre_bal_en_y()
         
         
+# MIL ATT
+def milieu_att(Mystate):
+
+     if( Mystate.position_bal().x >=  (settings.GAME_WIDTH*2.5)/4  ):
+        return attaque_pointe(Mystate)
+        
+     else :
+        return milieu_centre(Mystate)
+        
+     
+
+     
+ 
+         
+   
         
         
         
