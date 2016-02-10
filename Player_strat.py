@@ -4,14 +4,7 @@ from Tools import *
 
 # ATTAQUE BASIC T1
 def attaquant1(Mystate):
-    
-    if( Mystate.position_bal().x >= settings.GAME_WIDTH / 2 ) :
-        return Mystate.shoot_to_cage_t1() + Mystate.suivre_bal()  
-    else:
-        if(Mystate.position_bal().x < settings.GAME_WIDTH / 4) :
-            return Mystate.go_to_the_middle()
-        else : 
-            return Mystate.shoot_to_cage_t1() + Mystate.suivre_bal()                
+    return Mystate.shoot_to_cage_t1() + Mystate.suivre_bal()                
        
        
 # ATTAQUE EN POINTE 
@@ -21,7 +14,7 @@ def attaque_pointe(Mystate):
         return Mystate.shoot_to_cage_t1() + Mystate.suivre_bal()
         
     elif (Mystate.position_bal().x > settings.GAME_WIDTH / 2 ) :
-        a = random.uniform(0,15)
+        a = random.uniform(0,30)
         if a > 2.5:
             return Mystate.suivre_bal_en_y()
         else:
@@ -91,7 +84,6 @@ def test1(Mystate):
     
     #if(Mystate.distance_of_cage() < 50 ):
     if Mystate.distance_players_t2(Mystate.state) == True: 
-        print("OKKKKKKKKKKKKKKKKKK")
         return Mystate.shoot_to_cage_t1()
     else:
         return Mystate.go_to_cage_with_ball()     

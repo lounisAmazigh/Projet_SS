@@ -27,7 +27,7 @@ defense_Strategy = Strat(defenseur1,"def")
 milieu = Strat(milieu_centre , "mil")      
 milieu_attaquant = Strat(milieu_att , "milOf")
 test = Strat(test1, "test")
-
+attaque_basic = Strat(attaquant1 , "att")
 """       
 class Test(BaseStrategy):
     def __init__(self):
