@@ -48,7 +48,7 @@ def milieu_centre(Mystate):
 def defenseur1(Mystate):
     
     if( Mystate.position_bal().x < settings.GAME_WIDTH / 3 ) :
-        return Mystate.shoot_bal_def() + Mystate.suivre_bal()  
+        return Mystate.shoot_to_cage_t1() + Mystate.suivre_bal()  
             
     elif(Mystate.position_bal().x >= settings.GAME_WIDTH / 2) :
        return Mystate.go_to_defence()
@@ -60,10 +60,18 @@ def defenseur1(Mystate):
 def goal(Mystate):
     
      if( Mystate.position_bal().x < settings.GAME_WIDTH / 6 ) :
-        return Mystate.shoot_bal_def() + Mystate.suivre_bal()
+        return Mystate.shoot_to_cage_t1() + Mystate.suivre_bal()
         
      else :
         return Mystate.go_to_goal()
+        
+def goal2(Mystate):
+    
+     if( Mystate.position_bal().x > settings.GAME_WIDTH *3.5/4 ) :
+        return Mystate.shoot_to_cage_t2() + Mystate.suivre_bal()
+        
+     else :
+        return Mystate.go_to_goal2()
     
     
 # DEFENSE BASIC T2
@@ -87,14 +95,9 @@ def milieu_att(Mystate):
      else :
         return milieu_centre(Mystate)
         
-def test1(Mystate):   
-    
-    #if(Mystate.distance_of_cage() < 50 ):
-    if Mystate.distance_players_t2(Mystate.state) == True: 
-        print("OKKKKKKKKKKKKKKKKKK")
-        return Mystate.shoot_to_cage_t1()
-    else:
-        return Mystate.go_to_cage_with_ball()     
+     
+
+     
  
          
    

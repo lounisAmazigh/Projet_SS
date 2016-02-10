@@ -21,14 +21,23 @@ class Strat(BaseStrategy):
             return miroir_sa(self.comportement(Mystate))
     
     
-goal_strat = Strat(goal , "1")
-attaque_Strategy = Strat(attaque_pointe,"attaquant")
-defense_Strategy = Strat(defenseur1,"def")
-milieu = Strat(milieu_centre , "mil")      
-milieu_attaquant = Strat(milieu_att , "milOf")
-test = Strat(test1, "test")
-
-"""       
+Test_Strategy = Strat(goal , "1")
+attaque_Strategy2 = Strat(attaque_pointe,"attaquant")
+    
+       
+class defense_Strategy(BaseStrategy):
+    def __init__(self):
+        BaseStrategy.__init__(self, "Defense")
+        
+    def compute_strategy(self , state , id_team , id_player ):
+        Mystate = PlayerStateDecorator(state , id_team , id_player)
+     
+        if(id_team == 1):
+             return defenseur1(Mystate)
+        else:
+            return defenseur2(Mystate)
+         
+           
 class Test(BaseStrategy):
     def __init__(self):
         BaseStrategy.__init__(self, "test")
@@ -42,10 +51,36 @@ class Test(BaseStrategy):
             return  Mystate.suivre_bal() 
      
         return Mystate.shoot_to_cage_t1() + Mystate.suivre_bal()
+ 
+class attaquant_de_pointe(BaseStrategy):
+    def __init__(self):
+        BaseStrategy.__init__(self, "joueur 9")
+        
+    def compute_strategy(self , state , id_team , id_player ):
+        Mystate = PlayerStateDecorator(state , id_team , id_player)   
+        
+        return attaque_pointe(Mystate)
+
+class milieu(BaseStrategy):
+    def __init__(self):
+        BaseStrategy.__init__(self, "joueur 10")
+        
+    def compute_strategy(self , state , id_team , id_player ):
+        Mystate = PlayerStateDecorator(state , id_team , id_player) 
 
         return milieu_centre(Mystate)
         
-
+class goal_strat(BaseStrategy):
+    def __init__(self):
+        BaseStrategy.__init__(self, "joueur 1")
+        
+    def compute_strategy(self , state , id_team , id_player ):
+        Mystate = PlayerStateDecorator(state , id_team , id_player) 
+        
+        if(Mystate.id_team == 1):
+            return goal(Mystate)
+        else:
+            return goal2(Mystate)
 
 class team2_strat(BaseStrategy):
      def __init__(self):
@@ -54,7 +89,7 @@ class team2_strat(BaseStrategy):
      def compute_strategy(self , state , id_team , id_player ):
         Mystate = PlayerStateDecorator(state , id_team , id_player) 
         
-        return milieu_att(Mystate)"""
+        return milieu_att(Mystate)
         
 
 

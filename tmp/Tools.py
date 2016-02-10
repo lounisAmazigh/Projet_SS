@@ -44,20 +44,9 @@ class PlayerStateDecorator :
         return self.state.player_state(self.id_team, self.id_player).position  
         
     def distance_of_bal(self):
-        return self.state.player_state(self.id_team, self.id_player).position.distance(self.state.ball.position)     
-    
-    def distance_of_cage(self):
-        return self.state.player_state(self.id_team, self.id_player).position.distance(Vector2D(settings.GAME_WIDTH,settings.GAME_HEIGHT/2.))     
-     
-    def distance_players_t2(self,state):
-        m_state = state
-        for (id_team, id_player) in m_state.players :
-            if self.state.player_state(self.id_team, self.id_player).position.distance(m_state.player_state(id_team , id_player).position) < 52 :
-                return True
-            else:
-                return False
-        
-       ############## DEPLACEMENT ########################
+        return self.state.player_state(self.id_team, self.id_player).position.distance(self.state.ball.position)               
+       
+       ############## Dattaque_pointeEPLACEMENT ########################
        
     def stop(self):
         return SoccerAction()
@@ -93,16 +82,6 @@ class PlayerStateDecorator :
             return self.retour_position(v)
         else :
             return self.retour_position(v)
-            
-            ###### deplacement avec la balle #######
-            
-    def go_to_cage_with_ball(self):
-        a = random.uniform(0,1) - 0.2
-        v = Vector2D(a ,norm = 1.5)
-        if(self.can_shoot()==True):
-            return self.shoot_to(v)
-        else:
-            return self.suivre_bal()
 
     ############## SHOOT ###########################
         
@@ -116,8 +95,11 @@ class PlayerStateDecorator :
             return False
             
     def shoot_to(self, v):
-        return SoccerAction( self.position_bal()-self.position_player() ,  v)
-        
+        if(self.id_team == 1):
+            return SoccerAction( self.position_bal()-self.position_player() , v - self.position_player())
+        else: 
+            v = miroir_v(v)
+            return SoccerAction( self.position_bal()-self.position_player() , v - self.position_player())
  
     def shoot_to_cage_t1(self):
         if self.can_shoot() == True:
@@ -125,8 +107,14 @@ class PlayerStateDecorator :
         else :
             return SoccerAction(self.position_bal()-self.position_player(),self.no_shoot())
             
+    def shoot_to_cage_t2(self)  : 
+        if self.can_shoot() == True:
+            return SoccerAction( self.position_bal()-self.position_player() , Vector2D(0, (settings.GAME_HEIGHT)/2) - self.position_player())
+        else :
+            return SoccerAction(self.position_bal()-self.position_player(),self.no_shoot())
+            
     def shoot_rand(self) :
-        a = random.uniform(0,1) - 0.5
+        a = random.uniform(2,4) 
         u = (self.position_player().x*self.position_player().x) + (settings.GAME_HEIGHT/2 - self.position_player().y)*(settings.GAME_HEIGHT/2 - self.position_player().y) 
         d = math.sqrt(u)
         v = Vector2D(angle = a , norm = d ) 
