@@ -57,6 +57,29 @@ class PlayerStateDecorator :
             else:
                 return False
         
+    def pos_ball_attaque(self):
+        if(self.position_bal().x >= (settings.GAME_WIDTH*3)/4 ) :
+            return True
+        else :
+            return False
+            
+    def pos_ball_milieu(self):
+        if(self.position_bal().x <= (settings.GAME_WIDTH*3)/4) and (self.position_bal().x >= (settings.GAME_WIDTH*1.2)/4):
+            return True
+        else : 
+            return False
+            
+    def pos_ball_defense(self):
+        if(self.position_bal().x <= (settings.GAME_WIDTH/4)) and (self.position_bal().x >= (settings.GAME_WIDTH/16)):
+            return True
+        else : 
+            return False
+            
+    def pos_ball_goal(self):
+        if(self.position_bal().x <= (settings.GAME_WIDTH/10)) and (self.position_bal().y <= (settings.GAME_HEIGHT*3/4)) and (self.position_bal().y >= (settings.GAME_HEIGHT/4)) :
+            return True
+        else : 
+            return False
        ############## DEPLACEMENT ########################
        
     def stop(self):
@@ -116,7 +139,7 @@ class PlayerStateDecorator :
             return False
             
     def shoot_to(self, v):
-        return SoccerAction( self.position_bal()-self.position_player() ,  v)
+        return SoccerAction( self.position_bal()-self.position_player() ,  v - self.position_player())
         
  
     def shoot_to_cage_t1(self):
