@@ -49,13 +49,20 @@ class PlayerStateDecorator :
     def distance_of_cage(self):
         return self.state.player_state(self.id_team, self.id_player).position.distance(Vector2D(settings.GAME_WIDTH,settings.GAME_HEIGHT/2.))     
      
-    def distance_players_t2(self,state):
-        m_state = state
-        for (id_team, id_player) in m_state.players :
-            if self.state.player_state(self.id_team, self.id_player).position.distance(m_state.player_state(id_team , id_player).position) < 52 :
-                return True
-            else:
-                return False
+    def distance_player(self,idt,idp):
+        return self.position_player().distance(self.state.player_state(idt,idp).position)
+        
+    def distance_players_t2(self):
+        #list_dist = []
+        j = 0
+        for (idt, idp) in self.state.players :
+            if idt != self.id_team and self.distance_player(idt,idp) < 30 :
+                #list_dist.add(self.distance_player(idt,idp),idt,idp)
+                j=j+1
+        if j != 0:
+            return True
+        else :
+            return False
         
     def pos_ball_attaque(self):
         if(self.position_bal().x >= (settings.GAME_WIDTH*3)/4 ) :
@@ -121,9 +128,9 @@ class PlayerStateDecorator :
             
     def go_to_cage_with_ball(self):
         a = random.uniform(0,1) - 0.2
-        v = Vector2D(a ,norm = 1.5)
+        v = Vector2D(a ,norm = 50)
         if(self.can_shoot()==True):
-            return self.shoot_to(v)
+            return self.shoot_to_polar(v)
         else:
             return self.suivre_bal()
 
@@ -140,6 +147,9 @@ class PlayerStateDecorator :
             
     def shoot_to(self, v):
         return SoccerAction( self.position_bal()-self.position_player() ,  v - self.position_player())
+        
+    def shoot_to_polar(self, v):
+        return SoccerAction( self.position_bal()-self.position_player() ,  v ) 
         
  
     def shoot_to_cage_t1(self):

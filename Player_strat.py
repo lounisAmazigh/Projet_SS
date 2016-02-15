@@ -93,7 +93,8 @@ def milieu_att(Mystate):
 def test1(Mystate):   
     
     #if(Mystate.distance_of_cage() < 50 ):
-    if Mystate.distance_players_t2(Mystate.state) == True: 
+    if Mystate.distance_players_t2():
+        print("ok" )
         return Mystate.shoot_to_cage_t1()
     else:
         return Mystate.go_to_cage_with_ball()     
