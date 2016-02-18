@@ -82,30 +82,28 @@ def goal(Mystate):
     
 
 # MIL ATT
-def milieu_att(Mystate):
+def milieu_def(Mystate):
 
-     if( Mystate.position_bal().x >=  (settings.GAME_WIDTH*2.5)/4  ):
-        return attaque_pointe(Mystate)
-        
-     else :
+     if(Mystate.pos_ball_attaque() == True) :
         return milieu_centre(Mystate)
+        
+     else : 
+         return defenseur1(Mystate)
         
 def test1(Mystate):   
     
-    #if(Mystate.distance_of_cage() < 50 ):
-    if Mystate.distance_players_t2():
-        print("ok" )
-        return Mystate.shoot_to_cage_t1()
-    else:
-        return Mystate.go_to_cage_with_ball()     
+    if(Mystate.pos_ball_attaque() == True or Mystate.pos_ball_milieu() == True) :
+        if Mystate.distance_players_t2():
+            return Mystate.shoot_to_cage_t1()
+        else:
+            return Mystate.go_to_cage_with_ball()    
+            
+    else : 
+            return Mystate.go_to_the_middle()
+    
  
          
- #  """    a = random.uniform(0,30)
-  #      if a > 2.5:
-   # #        return Mystate.suivre_bal_en_y()
-      #  else:
-       #     return Mystate.shoot_to_cage_t1() + Mystate.suivre_bal()"""
-        
+
         
         
         
