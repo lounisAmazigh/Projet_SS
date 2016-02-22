@@ -21,8 +21,9 @@ class Strat(BaseStrategy):
             Mystate = PlayerStateDecorator(s_miroir,id_team , id_player)
             return miroir_sa(self.comportement(Mystate))
     
-keytest = KeyboardStrategy()
-keytest1 = KeyboardStrategy()
+keytest = KeyboardStrategy(fn = "fichier")
+
+
 
 goal_strat = Strat(goal , "1")
 attaque_Strategy = Strat(attaque_pointe,"attaquant")
@@ -33,12 +34,10 @@ test = Strat(test1, "test")
 P1_fonceur = Strat(attaquant1 , "att")
 T2_All = Strat(player_go , "tout")
 
-keytest.add("d" , defense_Strategy  )
+keytest.add("b" , defense_Strategy  )
 keytest.add("a" , attaque_Strategy  )           
 keytest.add("z" , milieu )  
 keytest.add("g" , goal_strat  )     
 
-keytest1.add("q" , defense_Strategy  )
-keytest1.add("s" , attaque_Strategy  )           
-keytest1.add("x" , milieu )  
-keytest1.add("w" , goal_strat  )   
+print "keytest"
+print(keytest)   

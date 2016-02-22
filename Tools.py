@@ -54,10 +54,10 @@ class PlayerStateDecorator :
         
     def distance_players_t2(self):
         #list_dist = []
+         #list_dist.add(self.distance_player(idt,idp),idt,idp)
         j = 0
         for (idt, idp) in self.state.players :
-            if idt != self.id_team and self.distance_player(idt,idp) < 20 and self.state.player_state(idt, idp).position.x >= self.position_player().x:
-                #list_dist.add(self.distance_player(idt,idp),idt,idp)
+            if idt != self.id_team and self.distance_player(idt,idp) < 30 and (self.state.player_state(idt, idp).position.x >= self.position_player().x):
                 j=j+1
         if j != 0:
             return True
@@ -71,7 +71,7 @@ class PlayerStateDecorator :
             return False
             
     def pos_ball_milieu(self):
-        if(self.position_bal().x <= (settings.GAME_WIDTH*3)/4) and (self.position_bal().x >= (settings.GAME_WIDTH*1.2)/4):
+        if(self.position_bal().x <= (settings.GAME_WIDTH*1.08)/2) and (self.position_bal().x >= (settings.GAME_WIDTH*1.2)/4):
             return True
         else : 
             return False
@@ -85,6 +85,18 @@ class PlayerStateDecorator :
     def pos_ball_goal(self):
         if(self.position_bal().x <= (settings.GAME_WIDTH/10)) and (self.position_bal().y <= (settings.GAME_HEIGHT*3/4)) and (self.position_bal().y >= (settings.GAME_HEIGHT/4)) :
             return True
+        else : 
+            return False
+            
+    def ball_est_proche(self):
+        if self.distance_of_bal() < 20: 
+            return True
+        else: 
+            return False
+            
+    def ball_is_goal_t2(self):
+        if self.position_bal().x >=  (settings.GAME_WIDTH*7)/8 :
+            return True 
         else : 
             return False
        ############## DEPLACEMENT ########################
@@ -113,7 +125,7 @@ class PlayerStateDecorator :
             
     
     def go_to_defence(self):
-        v= Vector2D(settings.GAME_WIDTH*1/4,settings.GAME_HEIGHT/2.)
+        v= Vector2D(settings.GAME_WIDTH*0.5/4,settings.GAME_HEIGHT/2.)
         return self.retour_position(v)
    
 
@@ -124,15 +136,19 @@ class PlayerStateDecorator :
         else :
             return self.retour_position(v)
             
+    def go_to_left(self):
+        v= Vector2D(settings.GAME_WIDTH*1/2,settings.GAME_HEIGHT*3/4.)
+        return self.retour_position(v)
+            
             ###### deplacement avec la balle #######
             
     def go_to_cage_with_ball(self):
        # a = random.uniform(0,1) - 0.2
         v = Vector2D(angle =0 ,norm = 2)
         if(self.position_bal().y > settings.GAME_HEIGHT/2) : 
-             v = Vector2D(angle =-0.5 ,norm = 2)
+             v = Vector2D(angle =-0.5 ,norm = 1.5)
         else :
-            v = Vector2D(angle =0.5 ,norm = 2)
+            v = Vector2D(angle =0.5 ,norm = 1.5)
         if(self.can_shoot()==True):
             return self.shoot_to_polar(v)
         else:
@@ -195,8 +211,6 @@ class PlayerStateDecorator :
             
     def pass_to(self , v):
         v.norme = 5
-        
-
         return self.shoot_to(v)
         
         

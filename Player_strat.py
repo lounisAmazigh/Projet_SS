@@ -31,29 +31,34 @@ def player_go(Mystate):
 def attaque_pointe(Mystate):
     
     if Mystate.pos_ball_attaque() == True :
-        return Mystate.shoot_to_cage_t1() + Mystate.suivre_bal()
+        if Mystate.distance_players_t2():
+            return Mystate.shoot_to_cage_t1() 
+        else: 
+            return Mystate.go_to_cage_with_ball()
         
-    elif (Mystate.pos_ball_milieu() == True) :
-        return Mystate.go_to_attack()
-
-    else:
+    elif Mystate.pos_ball_defense():
         return Mystate.suivre_bal_en_y()
+    else :
+        return Mystate.go_to_attack()
         
 # MILIEU DE TERRAIN
 def milieu_centre(Mystate):
     
-    if(Mystate.pos_ball_attaque() == True) :
-        return Mystate.suivre_bal_en_y()
-        
-    elif (Mystate.pos_ball_milieu() == True) :
+    if (Mystate.pos_ball_milieu() == True) :
         v = Vector2D(settings.GAME_WIDTH*3/4,settings.GAME_HEIGHT/2.)
-        if Mystate.position_bal().x >  (settings.GAME_WIDTH*1.2)/2 :
+        
+        if Mystate.position_bal().x > (settings.GAME_WIDTH*1.07)/2  :
             return Mystate.suivre_bal() + Mystate.shoot_to_cage_t1() 
-        else :
+            
+        elif Mystate.distance_players_t2() :
             return Mystate.suivre_bal() + Mystate.shoot_to(v)
             
-    elif Mystate.pos_ball_goal() == True :
-        return Mystate.go_to_the_middle()
+        else :
+            return Mystate.go_to_cage_with_ball()  
+            
+            
+    elif Mystate.pos_ball_defense() == True :
+        return Mystate.go_to_left()
         
     else:
         return Mystate.suivre_bal_en_y()
@@ -61,24 +66,31 @@ def milieu_centre(Mystate):
 # DEFENSE BASIC T1
 def defenseur1(Mystate):
     
-    if( Mystate.pos_ball_defense() == True) :
-        return Mystate.shoot_bal_def() + Mystate.suivre_bal()  
+    if( Mystate.pos_ball_defense() == True):
+        v = Vector2D(settings.GAME_WIDTH*1/2,settings.GAME_HEIGHT*3/4.)
             
-    elif(Mystate.pos_ball_attaque() == True) :
-       return Mystate.go_to_defence()
+        if Mystate.distance_players_t2() : 
+            return Mystate.shoot_to(v) + Mystate.suivre_bal()  
+            
+        else : 
+            return Mystate.go_to_cage_with_ball()
+            
+    elif Mystate.pos_ball_milieu() :
+            return Mystate.suivre_bal_en_y() 
+            
+    elif Mystate.pos_ball_goal()  :
+        return Mystate.shoot_bal_def() + Mystate.suivre_bal()
   
     else : 
-        return Mystate.suivre_bal_en_y()
+            return  Mystate.go_to_defence()
         
 # GOAL
 def goal(Mystate):  
   
-     if( Mystate.pos_ball_goal() == True) :
-        return Mystate.shoot_bal_def() + Mystate.suivre_bal()
-        
-     else :
-        return Mystate.go_to_goal()
-    
+     if Mystate.pos_ball_goal() == True :
+        return Mystate.shoot_bal_def() + Mystate.suivre_bal()    
+     else : 
+           return Mystate.go_to_goal()      
     
 
 # MIL ATT
@@ -92,8 +104,8 @@ def milieu_def(Mystate):
         
 def test1(Mystate):   
     
-    if(Mystate.pos_ball_attaque() == True or Mystate.pos_ball_milieu() == True) :
-        if Mystate.distance_players_t2():
+    if(Mystate.pos_ball_attaque() == True or Mystate.pos_ball_milieu()) :
+        if Mystate.distance_players_t2() or Mystate.ball_is_goal_t2() : # True
             return Mystate.shoot_to_cage_t1()
         else:
             return Mystate.go_to_cage_with_ball()    
