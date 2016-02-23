@@ -63,7 +63,14 @@ class PlayerStateDecorator :
             return True
         else :
             return False
-        
+            
+    def position_attaquant(self):
+        for (idt, idp) in self.state.players :
+            if idt == self.id_team and idp== 0:
+                print("La")
+                return self.state.player_state(idt, idp).position
+            else :
+                continue
     def pos_ball_attaque(self):
         if(self.position_bal().x >= (settings.GAME_WIDTH*3)/4 ) :
             return True
@@ -84,6 +91,29 @@ class PlayerStateDecorator :
             
     def pos_ball_goal(self):
         if(self.position_bal().x <= (settings.GAME_WIDTH/10)) and (self.position_bal().y <= (settings.GAME_HEIGHT*3/4)) and (self.position_bal().y >= (settings.GAME_HEIGHT/4)) :
+            return True
+        else : 
+            return False
+    def pos_ball_AD(self):
+        if(self.position_bal().x >= settings.GAME_WIDTH/2) and (self.position_bal().y <= settings.GAME_HEIGHT/2) :
+            return True
+        else : 
+            return False
+            
+    def pos_ball_AG(self):
+        if(self.position_bal().x >= settings.GAME_WIDTH/2) and (self.position_bal().y >= settings.GAME_HEIGHT/2) :
+            return True
+        else : 
+            return False
+            
+    def pos_ball_DD(self):
+        if(self.position_bal().x <= settings.GAME_WIDTH/2) and (self.position_bal().y <= settings.GAME_HEIGHT/2) :
+            return True
+        else : 
+            return False
+        
+    def pos_ball_DG(self):
+        if(self.position_bal().x <= settings.GAME_WIDTH/2) and (self.position_bal().y >= settings.GAME_HEIGHT/2) :
             return True
         else : 
             return False
@@ -112,7 +142,9 @@ class PlayerStateDecorator :
         
     def suivre_bal_en_y(self) :
         return SoccerAction(Vector2D(0,(self.position_bal().y - self.position_player().y)),Vector2D())
-    
+        
+    def suivre_bal_en_x(self) : 
+        return SoccerAction(Vector2D((self.position_bal().x - self.position_player().x),0),Vector2D())  
     
     def go_to_the_middle(self):
         v = Vector2D(settings.GAME_WIDTH/2,settings.GAME_HEIGHT/2.)
@@ -137,7 +169,7 @@ class PlayerStateDecorator :
             return self.retour_position(v)
             
     def go_to_left(self):
-        v= Vector2D(settings.GAME_WIDTH*1/2,settings.GAME_HEIGHT*3/4.)
+        v= Vector2D(self.position_player().x,settings.GAME_HEIGHT*3/4.)
         return self.retour_position(v)
             
             ###### deplacement avec la balle #######
@@ -152,6 +184,20 @@ class PlayerStateDecorator :
         if(self.can_shoot()==True):
             return self.shoot_to_polar(v)
         else:
+            return self.suivre_bal()
+            
+    def foncer_vers_les_but(self):
+        if self.can_shoot() == True:
+            v = Vector2D(settings.GAME_WIDTH - self.position_player().x , (settings.GAME_HEIGHT)/2 - self.position_player().y ).normalize().scale(2)
+            return SoccerAction( Vector2D() , v )
+        else :
+            return self.suivre_bal()
+            
+    def foncer_tout_droit(self):
+         if self.can_shoot() == True:
+            v = Vector2D(settings.GAME_WIDTH - self.position_player().x,0 ).normalize().scale(2)
+            return SoccerAction( Vector2D() , v )
+         else :
             return self.suivre_bal()
 
     ############## SHOOT ###########################
@@ -209,9 +255,15 @@ class PlayerStateDecorator :
             
     ############# PASS #####################
             
-    def pass_to(self , v):
-        v.norme = 5
-        return self.shoot_to(v)
+    def pass_to_attaquant(self):
+        if(self.position_attaquant() == Vector2D()):
+            return self.foncer_tout_droit()
+        else :
+            v = Vector2D(self.position_attaquant().x - self.position_player().x , self.position_attaquant().y - self.position_player().y).normalize().scale(4)
+            if(self.can_shoot() == True):
+                return SoccerAction(Vector2D() , v)
+            else : 
+                return SoccerAction(self.position_bal()-self.position_player(),self.no_shoot())
         
         
    

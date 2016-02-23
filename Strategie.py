@@ -22,7 +22,7 @@ class Strat(BaseStrategy):
             return miroir_sa(self.comportement(Mystate))
     
 keytest = KeyboardStrategy(fn = "fichier")
-
+    
 
 
 goal_strat = Strat(goal , "1")
@@ -33,6 +33,9 @@ milieu_deffa = Strat(milieu_def , "milOf")
 test = Strat(test1, "test")
 P1_fonceur = Strat(attaquant1 , "att")
 T2_All = Strat(player_go , "tout")
+attaquant_gauche = Strat(attaque_gauche , "7")
+att_def_droit = Strat(marcelo , "2")
+def_gauche = Strat(deff_gauche , "3")
 
 keytest.add("b" , defense_Strategy  )
 keytest.add("a" , attaque_Strategy  )           

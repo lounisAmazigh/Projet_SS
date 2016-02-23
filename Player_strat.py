@@ -1,10 +1,12 @@
 from  soccersimulator import settings
 from soccersimulator import  SoccerAction 
 from Tools import *
+import math
+import random
 
 # ATTAQUE BASIC T1
 def attaquant1(Mystate):
-    return Mystate.shoot_to_cage_t1() + Mystate.suivre_bal()                
+    return Mystate.foncer_tout_droit()                 
        
 # ATTAQUE BASIC T2 
 def player_go(Mystate):
@@ -26,21 +28,72 @@ def player_go(Mystate):
          return Mystate.shoot_bal_def() + Mystate.suivre_bal()
      
        
-# ATTAQUE EN POINTE 
-       
+# ATTAQUATNS
+       #attaque pointe
 def attaque_pointe(Mystate):
     
     if Mystate.pos_ball_attaque() == True :
         if Mystate.distance_players_t2():
             return Mystate.shoot_to_cage_t1() 
         else: 
-            return Mystate.go_to_cage_with_ball()
+            return Mystate.foncer_vers_les_but()
         
     elif Mystate.pos_ball_defense():
         return Mystate.suivre_bal_en_y()
     else :
         return Mystate.go_to_attack()
         
+     #attaque gauche 
+def attaque_gauche(Mystate):
+    if Mystate.pos_ball_AG() :    
+        if Mystate.distance_players_t2():
+            return Mystate.shoot_to_cage_t1()
+        else : 
+            return Mystate.foncer_vers_les_but()
+    elif Mystate.pos_ball_AD() :
+        return Mystate.suivre_bal_en_x()
+    
+    else :
+        return Mystate.go_to_left()
+        
+def marcelo(Mystate):
+    if Mystate.pos_ball_AD() :
+        if Mystate.ball_is_goal_t2():
+            return Mystate.shoot_to_cage_t1()
+        elif Mystate.distance_players_t2():
+            return Mystate.pass_to_attaquant()
+        else :
+            return Mystate.foncer_vers_les_but()
+            
+    elif Mystate.pos_ball_AG() :
+        return Mystate.suivre_bal_en_x()
+        
+    elif Mystate.pos_ball_DD() :
+        if Mystate.distance_players_t2():
+            return Mystate.pass_to_attaquant()
+        else :
+            return Mystate.foncer_tout_droit()
+            
+    else :
+        return Mystate.suivre_bal_en_x()
+        
+def deff_gauche(Mystate):
+    if Mystate.pos_ball_DG() :
+        #if Mystate.distance_players_t2():
+        return Mystate.pass_to_attaquant()
+        #else :
+        #return Mystate.foncer_tout_droit()
+            
+    elif Mystate.pos_ball_AD() or Mystate.pos_ball_AG():
+        return Mystate.go_to_the_middle()
+        
+    elif Mystate.pos_ball_DD() :
+        return Mystate.suivre_bal_en_x()
+    
+    else :
+        return Mystate.suivre_bal_en_x()
+            
+
 # MILIEU DE TERRAIN
 def milieu_centre(Mystate):
     
@@ -114,10 +167,6 @@ def test1(Mystate):
             return Mystate.go_to_the_middle()
     
  
-         
-
-        
-        
         
         
         
