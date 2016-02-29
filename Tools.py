@@ -57,7 +57,7 @@ class PlayerStateDecorator :
          #list_dist.add(self.distance_player(idt,idp),idt,idp)
         j = 0
         for (idt, idp) in self.state.players :
-            if idt != self.id_team and self.distance_player(idt,idp) < 30 and (self.state.player_state(idt, idp).position.x >= self.position_player().x):
+            if idt != self.id_team and self.distance_player(idt,idp) < 35   and (self.state.player_state(idt, idp).position.x >= self.position_player().x):
                 j=j+1
         if j != 0:
             return True
@@ -67,7 +67,6 @@ class PlayerStateDecorator :
     def position_attaquant(self):
         for (idt, idp) in self.state.players :
             if idt == self.id_team and idp== 0:
-                print("La")
                 return self.state.player_state(idt, idp).position
             else :
                 continue
@@ -125,7 +124,7 @@ class PlayerStateDecorator :
             return False
             
     def ball_is_goal_t2(self):
-        if self.position_bal().x >=  (settings.GAME_WIDTH*7)/8 :
+        if self.position_bal().x >=  (settings.GAME_WIDTH*3)/4 :
             return True 
         else : 
             return False
@@ -157,7 +156,15 @@ class PlayerStateDecorator :
             
     
     def go_to_defence(self):
-        v= Vector2D(settings.GAME_WIDTH*0.5/4,settings.GAME_HEIGHT/2.)
+        v= Vector2D(settings.GAME_WIDTH*1/4,settings.GAME_HEIGHT/2.)
+        return self.retour_position(v)
+        
+    def go_to_def_left(self):
+        v= Vector2D(settings.GAME_WIDTH*1/4,settings.GAME_HEIGHT*3/4.)
+        return self.retour_position(v)
+    
+    def go_to_def_right(self):
+        v= Vector2D(settings.GAME_WIDTH*1/4,settings.GAME_HEIGHT*1/4.)
         return self.retour_position(v)
    
 
@@ -169,7 +176,12 @@ class PlayerStateDecorator :
             return self.retour_position(v)
             
     def go_to_left(self):
-        v= Vector2D(self.position_player().x,settings.GAME_HEIGHT*3/4.)
+        
+        v= Vector2D(settings.GAME_WIDTH*3/4,settings.GAME_HEIGHT*3/4.)
+        return self.retour_position(v)
+        
+    def go_to_right(self):
+        v= Vector2D(settings.GAME_WIDTH*3/4,settings.GAME_HEIGHT*1/4.)
         return self.retour_position(v)
             
             ###### deplacement avec la balle #######

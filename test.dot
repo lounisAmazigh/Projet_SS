@@ -1,0 +1,37 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
+edge [fontname=helvetica] ;
+0 [label="tire <= 133.5833\ngini = 0.6208\nsamples = 25\nvalue = [10, 4, 11]\nclass = foncer", fillcolor="#8139e511"] ;
+1 [label="hisgoal_dist <= 76.9632\ngini = 0.6157\nsamples = 22\nvalue = [7, 4, 11]\nclass = foncer", fillcolor="#8139e544"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="tire <= 95.8161\ngini = 0.4388\nsamples = 14\nvalue = [3, 1, 10]\nclass = foncer", fillcolor="#8139e5a2"] ;
+1 -> 2 ;
+3 [label="gini = 0.0\nsamples = 5\nvalue = [0, 0, 5]\nclass = foncer", fillcolor="#8139e5ff"] ;
+2 -> 3 ;
+4 [label="tire <= 108.1203\ngini = 0.5679\nsamples = 9\nvalue = [3, 1, 5]\nclass = foncer", fillcolor="#8139e555"] ;
+2 -> 4 ;
+5 [label="tire <= 103.0324\ngini = 0.56\nsamples = 5\nvalue = [3, 1, 1]\nclass = att_gauche", fillcolor="#e581397f"] ;
+4 -> 5 ;
+6 [label="gini = 0.6667\nsamples = 3\nvalue = [1, 1, 1]\nclass = att_gauche", fillcolor="#e5813900"] ;
+5 -> 6 ;
+7 [label="gini = 0.0\nsamples = 2\nvalue = [2, 0, 0]\nclass = att_gauche", fillcolor="#e58139ff"] ;
+5 -> 7 ;
+8 [label="gini = 0.0\nsamples = 4\nvalue = [0, 0, 4]\nclass = foncer", fillcolor="#8139e5ff"] ;
+4 -> 8 ;
+9 [label="tire <= 58.0658\ngini = 0.5938\nsamples = 8\nvalue = [4, 3, 1]\nclass = att_gauche", fillcolor="#e5813933"] ;
+1 -> 9 ;
+10 [label="gini = 0.5\nsamples = 2\nvalue = [0, 1, 1]\nclass = def_gauche", fillcolor="#39e58100"] ;
+9 -> 10 ;
+11 [label="hisgoal_dist <= 81.5423\ngini = 0.4444\nsamples = 6\nvalue = [4, 2, 0]\nclass = att_gauche", fillcolor="#e581397f"] ;
+9 -> 11 ;
+12 [label="gini = 0.0\nsamples = 2\nvalue = [2, 0, 0]\nclass = att_gauche", fillcolor="#e58139ff"] ;
+11 -> 12 ;
+13 [label="hisgoal_dist <= 83.7208\ngini = 0.5\nsamples = 4\nvalue = [2, 2, 0]\nclass = att_gauche", fillcolor="#e5813900"] ;
+11 -> 13 ;
+14 [label="gini = 0.5\nsamples = 2\nvalue = [1, 1, 0]\nclass = att_gauche", fillcolor="#e5813900"] ;
+13 -> 14 ;
+15 [label="gini = 0.5\nsamples = 2\nvalue = [1, 1, 0]\nclass = att_gauche", fillcolor="#e5813900"] ;
+13 -> 15 ;
+16 [label="gini = 0.0\nsamples = 3\nvalue = [3, 0, 0]\nclass = att_gauche", fillcolor="#e58139ff"] ;
+0 -> 16 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+}

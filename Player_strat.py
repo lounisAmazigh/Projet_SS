@@ -6,7 +6,48 @@ import random
 
 # ATTAQUE BASIC T1
 def attaquant1(Mystate):
-    return Mystate.foncer_tout_droit()                 
+    if Mystate.pos_ball_attaque():
+        return Mystate.shoot_to_cage_t1() 
+    else :
+        return Mystate.foncer_tout_droit()       
+        
+def attaquant_droit_basic(Mystate):
+    if Mystate.pos_ball_AG():
+       if Mystate.distance_players_t2():
+           return Mystate.shoot_to_cage_t1()
+       else : 
+           return Mystate.foncer_vers_les_but()
+    else :
+        return Mystate.go_to_left()
+        
+def attaquant_gauche_basic(Mystate):
+    if Mystate.pos_ball_AD():
+       if Mystate.distance_players_t2():
+           return Mystate.pass_to_attaquant()
+       else : 
+           return Mystate.foncer_vers_les_but()
+    else :
+        return Mystate.go_to_right()
+        
+def deff_droit_basic(Mystate):
+    if Mystate.pos_ball_DG():
+       if Mystate.distance_players_t2():
+           return Mystate.pass_to_attaquant()
+       else : 
+           return Mystate.foncer_tout_droit() 
+    else :
+        return Mystate.go_to_def_left()
+        
+def deff_gauche_basic(Mystate):
+    if Mystate.pos_ball_DD():
+       if Mystate.distance_players_t2():
+           return Mystate.pass_to_attaquant()
+       else : 
+           return Mystate.foncer_tout_droit() 
+    else :
+        return Mystate.go_to_def_right()
+        
+        
        
 # ATTAQUE BASIC T2 
 def player_go(Mystate):
@@ -54,10 +95,15 @@ def attaque_gauche(Mystate):
         return Mystate.suivre_bal_en_x()
     
     else :
-        return Mystate.go_to_left()
+        if Mystate.distance_of_bal() < 15 :
+            return attaquant1(Mystate)
+        else : 
+            return Mystate.go_to_left()
         
 def marcelo(Mystate):
-    if Mystate.pos_ball_AD() :
+    if Mystate.position_bal().x == settings.GAME_WIDTH/2 :
+        return attaquant1(Mystate)
+    elif Mystate.pos_ball_AD() :
         if Mystate.ball_is_goal_t2():
             return Mystate.shoot_to_cage_t1()
         elif Mystate.distance_players_t2():
@@ -66,7 +112,10 @@ def marcelo(Mystate):
             return Mystate.foncer_vers_les_but()
             
     elif Mystate.pos_ball_AG() :
-        return Mystate.suivre_bal_en_x()
+        if Mystate.distance_of_bal() < 10 :
+            return attaquant1(Mystate)
+        else  :
+            return Mystate.suivre_bal_en_x()
         
     elif Mystate.pos_ball_DD() :
         if Mystate.distance_players_t2():
@@ -75,7 +124,10 @@ def marcelo(Mystate):
             return Mystate.foncer_tout_droit()
             
     else :
-        return Mystate.suivre_bal_en_x()
+        if Mystate.distance_of_bal() < 20 :
+            return attaquant1(Mystate)
+        else : 
+            return Mystate.suivre_bal_en_x()
         
 def deff_gauche(Mystate):
     if Mystate.pos_ball_DG() :
@@ -85,10 +137,13 @@ def deff_gauche(Mystate):
         #return Mystate.foncer_tout_droit()
             
     elif Mystate.pos_ball_AD() or Mystate.pos_ball_AG():
-        return Mystate.go_to_the_middle()
+        return Mystate.go_to_defence()
         
     elif Mystate.pos_ball_DD() :
-        return Mystate.suivre_bal_en_x()
+        if Mystate.distance_of_bal() < 20 :
+            return attaquant1(Mystate)
+        else : 
+            return Mystate.suivre_bal_en_x()
     
     else :
         return Mystate.suivre_bal_en_x()
