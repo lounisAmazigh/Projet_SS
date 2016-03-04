@@ -10,22 +10,22 @@ from soccersimulator import export_graphviz
 import cPickle
 import sys
 from Tools import *
-
+#bpos.distance(myg)
 ## Fonction de generation de descripteurs
 def gen_features(state,id_team,id_player):
     Mystate = PlayerStateDecorator(state,id_team,id_player)
     pos_jou_ad = Mystate.distance_players_t2()
     tire = Mystate.ball_is_goal_t2()
+    pos_attaquant = Mystate.position_attaquant()
     bpos = state.ball.position
     mpos = state.player_state(id_team,id_player).position
     myg = Vector2D((id_team-1)*settings.GAME_WIDTH,settings.GAME_HEIGHT/2.)
     hisg = Vector2D((2-id_team)*settings.GAME_WIDTH,settings.GAME_HEIGHT/2.)
     
-    return [bpos.distance(mpos),tire,bpos.distance(hisg),pos_jou_ad,bpos.distance(myg)]
+    return [tire , pos_jou_ad ]
 #Nom des features (optionel)
-gen_features.names = ["ball_dist","mygoal_dist","hisgoal_dist","position_advers","tire"]
-
-
+gen_features.names = ["tire","pos_joueur_adv"]
+#gen_features.names = ["ball_dist","mygoal_dist","hisgoal_dist","position_advers","pos_attaquant"]
 def build_apprentissage(fn,generator):
     ex_raw = KeyboardStrategy.read(fn)
     exemples = []

@@ -18,7 +18,7 @@ team2 = SoccerTeam("JSK",[Player("10",attaquant_gauche),Player("9",def_gauche),P
 
 #### Arbres de decisions
 
-tree = cPickle.load(file("./test.pkl"))
+tree = cPickle.load(file("./fichier.pkl"))
 dic = {"def_gauche":def_gauche,"def_droit":deffa_droit_basic,"att_gauche":att_gauche_basic , "att_droit":att_droit_basic , "foncer":P1_fonceur}
 treeStrat = DTreeStrategy(tree,dic,gen_features)
 
