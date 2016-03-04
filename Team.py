@@ -9,9 +9,9 @@ import cPickle
 
 team1 = SoccerTeam("JSK",[Player("10",attaquant_gauche),Player("9",def_gauche),Player("4",keytest),Player("1",goal_strat)])
 
-team4 = SoccerTeam("JSK",[Player("9",P1_fonceur) , Player("1",defense_Strategy)])
+team2 = SoccerTeam("JSK",[Player("9",P1_fonceur) , Player("1",defense_Strategy)])
 
-team2 = SoccerTeam("JSK",[Player("10",attaquant_gauche),Player("9",def_gauche),Player("4",att_def_droit),Player("1",goal_strat)])
+team4 = SoccerTeam("JSK",[Player("10",attaquant_gauche),Player("9",def_gauche),Player("4",att_def_droit),Player("1",goal_strat)])
 
 
 ##### TEAM IA 
