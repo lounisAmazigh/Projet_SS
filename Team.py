@@ -7,7 +7,7 @@ import cPickle
 #team4 = SoccerTeam("JSK",[Player("Fonceur",defense_Strategy),Player("9",attaque_Strategy)])
 #team4 = SoccerTeam("JSK",[Player("Fonceur",P1_fonceur)])
 
-team1 = SoccerTeam("JSK",[Player("10",attaquant_gauche),Player("9",def_gauche),Player("4",keytest),Player("1",goal_strat)])
+team1 = SoccerTeam("JSK",[Player("9",P1_fonceur)])
 
 team2 = SoccerTeam("JSK",[Player("9",P1_fonceur) , Player("1",defense_Strategy)])
 
