@@ -10,4 +10,3 @@ from Team import *
 
 match = SoccerMatch(team1,teamIA,2000)
 soccersimulator.show(match)
-

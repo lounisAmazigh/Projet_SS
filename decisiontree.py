@@ -22,9 +22,11 @@ def gen_features(state,id_team,id_player):
     myg = Vector2D((id_team-1)*settings.GAME_WIDTH,settings.GAME_HEIGHT/2.)
     hisg = Vector2D((2-id_team)*settings.GAME_WIDTH,settings.GAME_HEIGHT/2.)
     
-    return [tire , pos_jou_ad ]
+    return [bpos.distance(mpos),pos_attaquant.x,tire,bpos.distance(hisg),bpos.distance(myg)]
+    
 #Nom des features (optionel)
-gen_features.names = ["tire","pos_joueur_adv"]
+#return [bpos.distance(mpos),pos_attaquant,bpos.distance(hisg),pos_jou_ad,bpos.distance(myg)]
+gen_features.names = ["ball_dist","pos_att_x","peut_tirer","mygoal_dist","hisgoal_dist","pos_attaquant"]
 #gen_features.names = ["ball_dist","mygoal_dist","hisgoal_dist","position_advers","pos_attaquant"]
 def build_apprentissage(fn,generator):
     ex_raw = KeyboardStrategy.read(fn)
@@ -87,6 +89,4 @@ if __name__=="__main__":
     ## ou aller sur http://www.webgraphviz.com/ et copier le fichier .dot
     ## puis pour utiliser :
     ##### tree = cPickle.load(file("./tree.pkl"))
-    ##### dic = {"Random":RandomStrategy(),"Fonceur":FonceurStrategy(),"Defense":DefenseStrategy()}
-    ##### treeStrat = DTreeStrategy(tree,dic,gen_features)
-
+    ##### dic = {"Random":RandomStrategy(),"Fonceur":FonceurStrat

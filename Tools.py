@@ -52,12 +52,12 @@ class PlayerStateDecorator :
     def distance_player(self,idt,idp):
         return self.position_player().distance(self.state.player_state(idt,idp).position)
         
-    def distance_players_t2(self):
+    def distance_players_t2(self , dis):
         #list_dist = []
          #list_dist.add(self.distance_player(idt,idp),idt,idp)
         j = 0
         for (idt, idp) in self.state.players :
-            if idt != self.id_team and self.distance_player(idt,idp) < 35   and (self.state.player_state(idt, idp).position.x >= self.position_player().x):
+            if idt != self.id_team and self.distance_player(idt,idp) < dis   and (self.state.player_state(idt, idp).position.x >= self.position_player().x):
                 j=j+1
         if j != 0:
             return True
@@ -106,13 +106,13 @@ class PlayerStateDecorator :
             return False
             
     def pos_ball_DD(self):
-        if(self.position_bal().x <= settings.GAME_WIDTH/2) and (self.position_bal().y <= settings.GAME_HEIGHT/2) :
+        if(self.position_bal().x < settings.GAME_WIDTH/2) and (self.position_bal().y <= settings.GAME_HEIGHT/2) :
             return True
         else : 
             return False
         
     def pos_ball_DG(self):
-        if(self.position_bal().x <= settings.GAME_WIDTH/2) and (self.position_bal().y >= settings.GAME_HEIGHT/2) :
+        if(self.position_bal().x < settings.GAME_WIDTH/2) and (self.position_bal().y >= settings.GAME_HEIGHT/2) :
             return True
         else : 
             return False
@@ -147,6 +147,10 @@ class PlayerStateDecorator :
     
     def go_to_the_middle(self):
         v = Vector2D(settings.GAME_WIDTH/2,settings.GAME_HEIGHT/2.)
+        return self.retour_position(v)
+        
+    def avant_poste(self):
+        v = Vector2D(settings.GAME_WIDTH*1.6/4,settings.GAME_HEIGHT/2.)
         return self.retour_position(v)
             
     def go_to_attack(self):
@@ -233,7 +237,8 @@ class PlayerStateDecorator :
  
     def shoot_to_cage_t1(self):
         if self.can_shoot() == True:
-            return SoccerAction( self.position_bal()-self.position_player() , Vector2D(settings.GAME_WIDTH , (settings.GAME_HEIGHT)/2) - self.position_player())
+            v = Vector2D(settings.GAME_WIDTH - self.position_player().x , (settings.GAME_HEIGHT)/2 - self.position_player().y ).normalize().scale(5)
+            return SoccerAction( self.position_bal()-self.position_player() , v)
         else :
             return SoccerAction(self.position_bal()-self.position_player(),self.no_shoot())
             

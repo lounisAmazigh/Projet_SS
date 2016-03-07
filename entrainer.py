@@ -10,13 +10,28 @@ from Strategie import *
 import sys
 
 if __name__=="__main__":
-    prefix = "fichier"
+    prefix = "attaquant"
     if len(sys.argv)>1:
         prefix = sys.argv[1]
-        
-    team1 = SoccerTeam("JSK",[Player("10",attaquant_gauche),Player("9",def_gauche),Player("4",keytest),Player("1",goal_strat)])
-    team2 = SoccerTeam("JSK",[Player("10",attaquant_gauche),Player("9",def_gauche),Player("4",att_def_droit),Player("1",goal_strat)])
+    #team 4
+    #team1 = SoccerTeam("JSK",[Player("10",keyatt),Player("9",def_gauche),Player("4",att_def_droit),Player("1",goal_strat)])
+    #team2 = SoccerTeam("JSK",[Player("10",attaquant_gauche),Player("9",def_gauche),Player("4",att_def_droit),Player("1",goal_strat)])
+    
+    #Team 2
+   # team1 = SoccerTeam("JSK",[Player("10",keyatt),Player("9",defense_Strategy)])
+    #team2 = SoccerTeam("JSK",[Player("9",foncer) , Player("1",defense_Strategy)])
+    
+    #Team1
+    #team1 = SoccerTeam("JSK",[Player("10",foncer),Player("9",defense_Strategy)])
+   # team2 = SoccerTeam("JSK",[Player("9",defense_Strategy) , Player("1",goal_strat) ])
+    team1 = SoccerTeam("JSK",[Player("10",attaquant_gauche),Player("9",defense_Strategy),Player("4",att_def_droit),Player("1",goal_strat)])
+    team2 = SoccerTeam("JSK",[Player("10",attaquant_gauche),Player("9",defense_Strategy),Player("4",att_def_droit),Player("1",goal_strat)])
+    
     
     match = SoccerMatch(team1,team2,2000)
     show(match)
-    keytest.write(prefix+".exp",True)
+    keyatt.write(prefix+".exp",True)
+    keygoal.write(prefix+".exp",True)
+
+#"""keyatt
+#keygoal

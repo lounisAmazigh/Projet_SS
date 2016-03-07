@@ -21,7 +21,9 @@ class Strat(BaseStrategy):
             Mystate = PlayerStateDecorator(s_miroir,id_team , id_player)
             return miroir_sa(self.comportement(Mystate))
     
-keytest = KeyboardStrategy()
+keyatt = KeyboardStrategy()
+keygoal = KeyboardStrategy()
+
 
     
 
@@ -37,6 +39,7 @@ T2_All = Strat(player_go , "tout")
 attaquant_gauche = Strat(attaque_gauche , "7")
 att_def_droit = Strat(marcelo , "att_def_droit")
 def_gauche = Strat(deff_gauche , "3")
+foncer = Strat(foncer , "9")
 
 
 #BASIC 
@@ -46,13 +49,15 @@ deffa_droit_basic = Strat(deff_droit_basic , "def_droit")
 deffa_gauche_basic = Strat(deff_gauche_basic , "def_gauche")
 
 # ATT DEF GAUCHE
-keytest.add("d" ,   P1_fonceur ) 
-keytest.add("s" , att_gauche_basic  )
-keytest.add("z" , att_droit_basic  )           
-keytest.add("q" , deffa_gauche_basic ) 
-keytest.add("a" ,  deffa_droit_basic ) 
+keyatt.add("d" ,   P1_fonceur ) 
+keyatt.add("s" , att_gauche_basic  )
+keyatt.add("z" , att_droit_basic  )           
+keyatt.add("q" , deffa_gauche_basic ) 
+keyatt.add("a" ,  deffa_droit_basic ) 
 
-
+# Goal Strategie 
+keygoal.add("g" , goal_strat)
+keygoal.add("h" , defense_Strategy)
   
 #Keytest.add("d" , P1_fonceur )  
-   
+  
