@@ -8,9 +8,9 @@ import os
 
 team1 = SoccerTeam("JSK",[Player("10",foncer)])
 
-team2 = SoccerTeam("JSK",[Player("9",foncer) , Player("1",defense_Strategy)])
+team2 = SoccerTeam("JSK",[Player("9",milieu) , Player("4",defense_Strategy)])
 
-team4 = SoccerTeam("JSK",[Player("10",attaquant_gauche),Player("9",defense_Strategy),Player("4",att_def_droit),Player("1",goal_strat)])
+team4 = SoccerTeam("JSK",[Player("9",attaquant_gauche),Player("4",def_gauche),Player("7",att_def_droit),Player("1",goal_strat)])
 
 
 ##### TEAM IA 
@@ -24,8 +24,10 @@ treeStrat = DTreeStrategy(tree,dic,gen_features)
 
 ### Arbre de decisions pour le goal 
 tree1 = cPickle.load(file(fn2))
-dic_goal = {"def":defense_Strategy,"1":goal_strat}
+dic_goal = {"def":defense_Strategy,"1":goal_strat,"tire_alea":tire_alea}
 treeGoal = DTreeStrategy(tree1,dic_goal,gen_features)
 
-teamIA= SoccerTeam("IATEAM",[Player("7",att_def_droit)  , Player("9",def_gauche) , Player("IA_G",treeGoal) , Player("IA_A",treeStrat) ])
-
+teamIA= SoccerTeam("IATEAM",[Player("IA_A",treeStrat) ,Player("7",att_def_droit)  , Player("9",def_gauche) , Player("IA_G",treeGoal)  ])
+teamIA1= SoccerTeam("jsk",[Player("IA_A",foncer) ])
+teamIA2= SoccerTeam("jsk",[Player("IA_A",treeStrat) ,Player("7",defense_Strategy) ])
+teamIA4= SoccerTeam("jsk",[Player("IA_A",treeStrat) ,Player("7",att_def_droit)  , Player("9",def_gauche) , Player("IA_G",treeGoal)  ])

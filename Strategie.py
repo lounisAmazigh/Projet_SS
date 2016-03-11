@@ -40,6 +40,7 @@ attaquant_gauche = Strat(attaque_gauche , "7")
 att_def_droit = Strat(marcelo , "att_def_droit")
 def_gauche = Strat(deff_gauche , "3")
 foncer = Strat(foncer , "9")
+tire_alea = Strat(tire_aleatoire,"tire_alea")
 
 
 #BASIC 
@@ -57,7 +58,8 @@ keyatt.add("a" ,  deffa_droit_basic )
 
 # Goal Strategie 
 keygoal.add("g" , goal_strat)
-keygoal.add("h" , defense_Strategy)
+keygoal.add("f" , defense_Strategy)
+keygoal.add("h" , tire_alea)
   
 #Keytest.add("d" , P1_fonceur )  
   

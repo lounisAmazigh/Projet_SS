@@ -14,7 +14,10 @@ from Tools import *
 ## Fonction de generation de descripteurs
 def gen_features(state,id_team,id_player):
     Mystate = PlayerStateDecorator(state,id_team,id_player)
-    pos_jou_ad = Mystate.distance_players_t2()
+    if Mystate.distance_players_t2(20) :
+        pos_jou_ad =1
+    else : 
+        pos_jou_ad =2
     tire = Mystate.ball_is_goal_t2()
     pos_attaquant = Mystate.position_attaquant()
     bpos = state.ball.position
@@ -22,7 +25,7 @@ def gen_features(state,id_team,id_player):
     myg = Vector2D((id_team-1)*settings.GAME_WIDTH,settings.GAME_HEIGHT/2.)
     hisg = Vector2D((2-id_team)*settings.GAME_WIDTH,settings.GAME_HEIGHT/2.)
     
-    return [bpos.distance(mpos),pos_attaquant.x,tire,bpos.distance(hisg),bpos.distance(myg)]
+    return [bpos.distance(mpos),pos_attaquant.x,tire,bpos.distance(hisg),bpos.distance(myg),pos_jou_ad]
     
 #Nom des features (optionel)
 #return [bpos.distance(mpos),pos_attaquant,bpos.distance(hisg),pos_jou_ad,bpos.distance(myg)]

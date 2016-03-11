@@ -8,7 +8,7 @@ import random
 def foncer(Mystate):
     
     if Mystate.pos_ball_attaque() :
-        if Mystate.ball_is_goal_t2():
+        if Mystate.ball_is_goal_t2() and Mystate.distance_players_t2(15):
             return Mystate.shoot_to_cage_t1(4) 
         else :             
             return Mystate.foncer_vers_les_but(2)
@@ -18,7 +18,11 @@ def foncer(Mystate):
         
     else :
         return Mystate.foncer_tout_droit(1.5)    
-      #  return Mystate.foncer_a_gauche(2)
+    
+#Suivre et tire aleatoir
+def tire_aleatoire(Mystate):
+    return Mystate.shoot_bal_def() + Mystate.suivre_bal() 
+
 
 def attaquant1(Mystate):
     if Mystate.pos_ball_AG() :
@@ -112,10 +116,11 @@ def attaque_pointe(Mystate):
      #attaque gauche 
 def attaque_gauche(Mystate):
     if Mystate.pos_ball_AG() :    
-        if Mystate.distance_players_t2(20):
-            return Mystate.shoot_to_cage_t1(5)
+        if Mystate.distance_players_t2(30):
+            return foncer(Mystate)
+           # return Mystate.shoot_to_cage_t1(5)
         else : 
-            return Mystate.foncer_vers_les_but(2)
+            return Mystate.foncer_vers_les_but(1.5)
     elif Mystate.pos_ball_AD() :
         return Mystate.suivre_bal_en_x()
     
@@ -156,17 +161,15 @@ def marcelo(Mystate):
         
 def deff_gauche(Mystate):
     if Mystate.pos_ball_DG() :
-        #if Mystate.distance_players_t2():
         return Mystate.pass_to_attaquant()
-        #else :
-        #return Mystate.foncer_tout_droit()
+        
             
     elif Mystate.pos_ball_AD() or Mystate.pos_ball_AG():
         return Mystate.go_to_defence()
         
     elif Mystate.pos_ball_DD() :
         if Mystate.distance_of_bal() < 20 :
-            return attaquant1(Mystate)
+            return foncer(Mystate)
         else : 
             return Mystate.suivre_bal_en_x()
     
