@@ -128,6 +128,13 @@ class PlayerStateDecorator :
             return True 
         else : 
             return False
+            
+    def ball_centre(self):
+        
+        if ( self.position_bal().x == settings.GAME_WIDTH/2 ) and (self.position_bal().y == settings.GAME_WIDTH/2 ) :
+            return True 
+        else : 
+            return False
        ############## DEPLACEMENT ########################
        
     def stop(self):
@@ -202,16 +209,23 @@ class PlayerStateDecorator :
         else:
             return self.suivre_bal()
             
-    def foncer_vers_les_but(self):
+    def foncer_vers_les_but(self,s):
         if self.can_shoot() == True:
-            v = Vector2D(settings.GAME_WIDTH - self.position_player().x , (settings.GAME_HEIGHT)/2 - self.position_player().y ).normalize().scale(2)
+            v = Vector2D(settings.GAME_WIDTH - self.position_player().x , (settings.GAME_HEIGHT)/2 - self.position_player().y ).normalize().scale(s)
             return SoccerAction( Vector2D() , v )
         else :
             return self.suivre_bal()
             
-    def foncer_tout_droit(self):
+    def foncer_tout_droit(self,s):
          if self.can_shoot() == True:
-            v = Vector2D(settings.GAME_WIDTH - self.position_player().x,0 ).normalize().scale(2)
+            v = Vector2D(settings.GAME_WIDTH - self.position_player().x,0 ).normalize().scale(s)
+            return SoccerAction( Vector2D() , v )
+         else :
+            return self.suivre_bal()
+            
+    def foncer_a_gauche(self, s):
+         if self.can_shoot() == True:
+            v = Vector2D( 0,settings.GAME_HEIGHT - self.position_player().y).normalize().scale(s)
             return SoccerAction( Vector2D() , v )
          else :
             return self.suivre_bal()
@@ -235,9 +249,9 @@ class PlayerStateDecorator :
          return SoccerAction( self.position_bal()-self.position_player() ,  v)
          
  
-    def shoot_to_cage_t1(self):
+    def shoot_to_cage_t1(self,s):
         if self.can_shoot() == True:
-            v = Vector2D(settings.GAME_WIDTH - self.position_player().x , (settings.GAME_HEIGHT)/2 - self.position_player().y ).normalize().scale(5)
+            v = Vector2D(settings.GAME_WIDTH - self.position_player().x , (settings.GAME_HEIGHT)/2 - self.position_player().y ).normalize().scale(s)
             return SoccerAction( self.position_bal()-self.position_player() , v)
         else :
             return SoccerAction(self.position_bal()-self.position_player(),self.no_shoot())
@@ -254,7 +268,7 @@ class PlayerStateDecorator :
         
     def shoot_bal( self):
         if(self.can_shoot() == True):
-            return self.shoot_to_cage_t1()
+            return self.shoot_to_cage_t1(5)
         else :
             return self.stop()
             

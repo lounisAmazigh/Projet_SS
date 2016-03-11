@@ -22,10 +22,10 @@ if __name__=="__main__":
     #team2 = SoccerTeam("JSK",[Player("9",foncer) , Player("1",defense_Strategy)])
     
     #Team1
-    #team1 = SoccerTeam("JSK",[Player("10",foncer),Player("9",defense_Strategy)])
-   # team2 = SoccerTeam("JSK",[Player("9",defense_Strategy) , Player("1",goal_strat) ])
-    team1 = SoccerTeam("JSK",[Player("10",attaquant_gauche),Player("9",defense_Strategy),Player("4",att_def_droit),Player("1",goal_strat)])
-    team2 = SoccerTeam("JSK",[Player("10",attaquant_gauche),Player("9",defense_Strategy),Player("4",att_def_droit),Player("1",goal_strat)])
+    team1 = SoccerTeam("JSK",[Player("9",foncer) , Player("1",defense_Strategy)])
+    team2 = SoccerTeam("JSK",[Player("9",milieu) , Player("1",defense_Strategy) ])
+    
+  
     
     
     match = SoccerMatch(team1,team2,2000)

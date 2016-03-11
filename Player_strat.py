@@ -6,11 +6,20 @@ import random
 
 # ATTAQUE BASIC T1
 def foncer(Mystate):
-    if Mystate.pos_ball_attaque():
-        return Mystate.shoot_to_cage_t1() 
-    else :
-        return Mystate.foncer_tout_droit()       
+    
+    if Mystate.pos_ball_attaque() :
+        if Mystate.ball_is_goal_t2():
+            return Mystate.shoot_to_cage_t1(4) 
+        else :             
+            return Mystate.foncer_vers_les_but(2)
+            
+    elif Mystate.distance_players_t2(20) :
+        return Mystate.foncer_a_gauche(1)
         
+    else :
+        return Mystate.foncer_tout_droit(1.5)    
+      #  return Mystate.foncer_a_gauche(2)
+
 def attaquant1(Mystate):
     if Mystate.pos_ball_AG() :
        return attaquant_droit_basic(Mystate)
@@ -30,9 +39,9 @@ def attaquant1(Mystate):
 def attaquant_droit_basic(Mystate):
     if Mystate.pos_ball_AG():
        if Mystate.distance_players_t2(20):
-           return Mystate.shoot_to_cage_t1()
+           return Mystate.shoot_to_cage_t1(5)
        else : 
-           return Mystate.foncer_vers_les_but()
+           return Mystate.foncer_vers_les_but(2)
     else :
         return Mystate.go_to_left()
         
@@ -41,7 +50,7 @@ def attaquant_gauche_basic(Mystate):
        if Mystate.distance_players_t2(15):
            return Mystate.pass_to_attaquant()
        else : 
-           return Mystate.foncer_vers_les_but()
+           return Mystate.foncer_vers_les_but(2)
     else :
         return Mystate.go_to_right()
         
@@ -77,7 +86,7 @@ def player_go(Mystate):
      elif (Mystate.pos_ball_milieu() == True) :
         v = Vector2D(settings.GAME_WIDTH*3/4,settings.GAME_HEIGHT/2.)
         if Mystate.position_bal().x >  (settings.GAME_WIDTH*1.2)/2 :
-            return Mystate.suivre_bal() + Mystate.shoot_to_cage_t1() 
+            return Mystate.suivre_bal() + Mystate.shoot_to_cage_t1(5) 
         else :
             return Mystate.suivre_bal() + Mystate.shoot_to(v)
             
@@ -91,9 +100,9 @@ def attaque_pointe(Mystate):
     
     if Mystate.pos_ball_attaque() == True :
         if Mystate.distance_players_t2(20):
-            return Mystate.shoot_to_cage_t1() 
+            return Mystate.shoot_to_cage_t1(5) 
         else: 
-            return Mystate.foncer_vers_les_but()
+            return Mystate.foncer_vers_les_but(2)
         
     elif Mystate.pos_ball_defense():
         return Mystate.suivre_bal_en_y()
@@ -104,9 +113,9 @@ def attaque_pointe(Mystate):
 def attaque_gauche(Mystate):
     if Mystate.pos_ball_AG() :    
         if Mystate.distance_players_t2(20):
-            return Mystate.shoot_to_cage_t1()
+            return Mystate.shoot_to_cage_t1(5)
         else : 
-            return Mystate.foncer_vers_les_but()
+            return Mystate.foncer_vers_les_but(2)
     elif Mystate.pos_ball_AD() :
         return Mystate.suivre_bal_en_x()
     
@@ -121,11 +130,11 @@ def marcelo(Mystate):
         return attaquant1(Mystate)
     elif Mystate.pos_ball_AD() :
         if Mystate.ball_is_goal_t2():
-            return Mystate.shoot_to_cage_t1()
+            return Mystate.shoot_to_cage_t1(5)
         elif Mystate.distance_players_t2(15):
             return Mystate.pass_to_attaquant()
         else :
-            return Mystate.foncer_vers_les_but()
+            return Mystate.foncer_vers_les_but(2)
             
     elif Mystate.pos_ball_AG() :
         if Mystate.distance_of_bal() < 10 :
@@ -137,7 +146,7 @@ def marcelo(Mystate):
         if Mystate.distance_players_t2(25):
             return Mystate.pass_to_attaquant()
         else :
-            return Mystate.foncer_tout_droit()
+            return Mystate.foncer_tout_droit(2)
             
     else :
         if Mystate.distance_of_bal() < 20 :
@@ -167,25 +176,14 @@ def deff_gauche(Mystate):
 
 # MILIEU DE TERRAIN
 def milieu_centre(Mystate):
-    
-    if (Mystate.pos_ball_milieu() == True) :
-        v = Vector2D(settings.GAME_WIDTH*3/4,settings.GAME_HEIGHT/2.)
-        
-        if Mystate.position_bal().x > (settings.GAME_WIDTH*1.07)/2  :
-            return Mystate.suivre_bal() + Mystate.shoot_to_cage_t1() 
-            
-        elif Mystate.distance_players_t2(25) :
-            return Mystate.suivre_bal() + Mystate.shoot_to(v)
-            
-        else :
-            return Mystate.go_to_cage_with_ball()  
-            
-            
-    elif Mystate.pos_ball_defense() == True :
-        return Mystate.go_to_left()
-        
-    else:
-        return Mystate.suivre_bal_en_y()
+     
+     if Mystate.pos_ball_attaque() or Mystate.pos_ball_milieu() or Mystate.distance_of_bal() < 11 :
+         return foncer(Mystate)
+         
+     else :
+         return Mystate.suivre_bal_en_y()
+         
+   
         
 # DEFENSE BASIC T1
 def defenseur1(Mystate):
@@ -199,9 +197,9 @@ def defenseur1(Mystate):
         
     else :
         if Mystate.position_bal().y == settings.GAME_HEIGHT/2. :
-            print("jj")
             return Mystate.avant_poste()
-        elif Mystate.distance_of_bal() < 20 :
+        
+        elif Mystate.distance_of_bal() < 11 :
             return foncer(Mystate)
             
         elif Mystate.position_player().x > settings.GAME_WIDTH*3/4 :
@@ -230,7 +228,7 @@ def test1(Mystate):
     
     if(Mystate.pos_ball_attaque() == True or Mystate.pos_ball_milieu()) :
         if Mystate.distance_players_t2() or Mystate.ball_is_goal_t2() : # True
-            return Mystate.shoot_to_cage_t1()
+            return Mystate.shoot_to_cage_t1(5)
         else:
             return Mystate.go_to_cage_with_ball()    
             
