@@ -48,6 +48,9 @@ class PlayerStateDecorator :
     
     def distance_of_cage(self):
         return self.state.player_state(self.id_team, self.id_player).position.distance(Vector2D(settings.GAME_WIDTH,settings.GAME_HEIGHT/2.))     
+        
+    def distance_of_mycage(self):
+        return self.state.player_state(self.id_team, self.id_player).position.distance(Vector2D(0,settings.GAME_HEIGHT/2.))   
      
     def distance_player(self,idt,idp):
         return self.position_player().distance(self.state.player_state(idt,idp).position)

@@ -11,6 +11,7 @@ import cPickle
 import sys
 from Tools import *
 #bpos.distance(myg)
+
 ## Fonction de generation de descripteurs
 def gen_features(state,id_team,id_player):
     Mystate = PlayerStateDecorator(state,id_team,id_player)
@@ -26,6 +27,72 @@ def gen_features(state,id_team,id_player):
     hisg = Vector2D((2-id_team)*settings.GAME_WIDTH,settings.GAME_HEIGHT/2.)
     
     return [bpos.distance(mpos),pos_attaquant.x,tire,bpos.distance(hisg),bpos.distance(myg),pos_jou_ad]
+    
+def recuperer_etat(state , id_team , id_player):
+    Mystate = PlayerStateDecorator(state,id_team,id_player)
+   
+    ## Distance du joueur adverse    
+    if Mystate.distance_players_t2(40): 
+        pos_jou_ad = 0
+    elif Mystate.distance_players_t2(30):
+        pos_jou_ad = 1
+    elif Mystate.distance_players_t2(20):
+        pos_jou_ad = 2
+    elif Mystate.distance_players_t2(10):
+        pos_jou_ad = 3
+    else :
+        pos_jou_ad = 0
+        
+    ## Distance de la balle pour tirer 
+    if(Mystate.distance_of_bal() < settings.PLAYER_RADIUS + settings.BALL_RADIUS) :
+        pos_bal = 3
+    else :
+        pos_bal = 0
+        
+    ## Distance des goal adverse : 
+    if Mystate.distance_of_cage() < 20 :
+        cage = 3
+        
+    elif Mystate.distance_of_cage() < 30 :
+        cage = 2
+        
+    elif Mystate.distance_of_cage() < 50 :
+        cage = 1      
+    else :
+        cage = 0
+        
+    ## Distance de mes cages 
+    if Mystate.distance_of_mycage() < 10 :
+        cage = 3
+        
+    elif Mystate.distance_of_mycage() < 20 :
+        cage = 2
+        
+    elif Mystate.distance_of_mycage() < 30 :
+        cage = 1     
+    else :
+        cage = 0
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 #Nom des features (optionel)
 #return [bpos.distance(mpos),pos_attaquant,bpos.distance(hisg),pos_jou_ad,bpos.distance(myg)]

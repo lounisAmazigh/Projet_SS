@@ -6,9 +6,9 @@ import cPickle
 import os
 
 
-team1 = SoccerTeam("JSK",[Player("10",foncer)])
+team = SoccerTeam("JSK",[Player("10",foncer)])
 
-team2 = SoccerTeam("JSK",[Player("9",milieu) , Player("4",defense_Strategy)])
+team1 = SoccerTeam("JSK",[Player("9",milieu) , Player("4",defense_Strategy)])
 
 team4 = SoccerTeam("JSK",[Player("9",attaquant_gauche),Player("4",def_gauche),Player("7",att_def_droit),Player("1",goal_strat)])
 
@@ -16,6 +16,7 @@ team4 = SoccerTeam("JSK",[Player("9",attaquant_gauche),Player("4",def_gauche),Pl
 ##### TEAM IA 
 fn = os.path.join(os.path.dirname(os.path.realpath(__file__)),"attaquant.pkl")
 fn2 = os.path.join(os.path.dirname(os.path.realpath(__file__)),"goal.pkl")
+fn3 = os.path.join(os.path.dirname(os.path.realpath(__file__)),"defence.pkl")
 #### Arbres de decisions
 
 tree = cPickle.load(file(fn))
@@ -27,7 +28,11 @@ tree1 = cPickle.load(file(fn2))
 dic_goal = {"def":defense_Strategy,"1":goal_strat,"tire_alea":tire_alea}
 treeGoal = DTreeStrategy(tree1,dic_goal,gen_features)
 
-teamIA= SoccerTeam("IATEAM",[Player("IA_A",treeStrat) ,Player("7",att_def_droit)  , Player("9",def_gauche) , Player("IA_G",treeGoal)  ])
+## Arbre de decision pour la deffence
+tree2 = cPickle.load(file(fn3))
+treeDef = DTreeStrategy(tree2,dic,gen_features)
+
+teamIA= SoccerTeam("IATEAM",[Player("IA_A",treeStrat)  , Player("IA_D",treeDef)   ])
 teamIA1= SoccerTeam("jsk",[Player("IA_A",foncer) ])
 teamIA2= SoccerTeam("jsk",[Player("IA_A",treeStrat) ,Player("7",defense_Strategy) ])
 teamIA4= SoccerTeam("jsk",[Player("IA_A",treeStrat) ,Player("7",att_def_droit)  , Player("9",def_gauche) , Player("IA_G",treeGoal)  ])

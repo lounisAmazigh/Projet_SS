@@ -23,7 +23,7 @@ class Strat(BaseStrategy):
     
 keyatt = KeyboardStrategy()
 keygoal = KeyboardStrategy()
-
+keydef = KeyboardStrategy()
 
     
 
@@ -60,6 +60,33 @@ keyatt.add("a" ,  deffa_droit_basic )
 keygoal.add("g" , goal_strat)
 keygoal.add("f" , defense_Strategy)
 keygoal.add("h" , tire_alea)
+  
+#DEF STRATEGIE
+  
+keydef.add("d" ,   P1_fonceur ) 
+keydef.add("s" , att_gauche_basic  )
+keydef.add("z" , att_droit_basic  )    
+keydef.add("q" , deffa_gauche_basic ) 
+keydef.add("a" ,  deffa_droit_basic )   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
 #Keytest.add("d" , P1_fonceur )  
   

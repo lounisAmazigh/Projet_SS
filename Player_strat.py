@@ -180,7 +180,7 @@ def deff_gauche(Mystate):
 # MILIEU DE TERRAIN
 def milieu_centre(Mystate):
      
-     if Mystate.pos_ball_attaque() or Mystate.pos_ball_milieu() or Mystate.distance_of_bal() < 11 :
+     if Mystate.position_bal().x > settings.GAME_WIDTH/2  or Mystate.distance_of_bal() < 11 :
          return foncer(Mystate)
          
      else :

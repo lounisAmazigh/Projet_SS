@@ -10,11 +10,11 @@ from Strategie import *
 import sys
 
 if __name__=="__main__":
-    prefix = "goal"
+    prefix = "defence"
     if len(sys.argv)>1:
         prefix = sys.argv[1]
     #team 4
-    team1 = SoccerTeam("JSK",[Player("10",attaquant_gauche),Player("9",def_gauche),Player("4",att_def_droit),Player("1",keygoal)])
+    team1 = SoccerTeam("JSK",[Player("10",attaquant_gauche),Player("9",keydef),Player("4",att_def_droit),Player("1",goal_strat)])
     team2 = SoccerTeam("JSK",[Player("10",attaquant_gauche),Player("9",def_gauche),Player("4",att_def_droit),Player("1",goal_strat)])
     
     #Team 2
@@ -32,6 +32,7 @@ if __name__=="__main__":
     show(match)
     keyatt.write(prefix+".exp",True)
     keygoal.write(prefix+".exp",True)
+    keydef.write(prefix+".exp",True)
 
 #"""keyatt
 #keygoal
