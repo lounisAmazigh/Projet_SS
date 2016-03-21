@@ -10,6 +10,7 @@ from soccersimulator import export_graphviz
 import cPickle
 import sys
 from Tools import *
+from collections import defaultdict
 #bpos.distance(myg)
 
 ## Fonction de generation de descripteurs
@@ -28,9 +29,10 @@ def gen_features(state,id_team,id_player):
     
     return [bpos.distance(mpos),pos_attaquant.x,tire,bpos.distance(hisg),bpos.distance(myg),pos_jou_ad]
     
-def recuperer_etat(state , id_team , id_player):
+def descritisation(state , id_team , id_player):
     Mystate = PlayerStateDecorator(state,id_team,id_player)
-   
+
+    lista = []   
     ## Distance du joueur adverse    
     if Mystate.distance_players_t2(40): 
         pos_jou_ad = 0
@@ -43,12 +45,14 @@ def recuperer_etat(state , id_team , id_player):
     else :
         pos_jou_ad = 0
         
+    lista.add(pos_jou_ad)
     ## Distance de la balle pour tirer 
     if(Mystate.distance_of_bal() < settings.PLAYER_RADIUS + settings.BALL_RADIUS) :
         pos_bal = 3
     else :
         pos_bal = 0
         
+    lista.add(pos_bal)
     ## Distance des goal adverse : 
     if Mystate.distance_of_cage() < 20 :
         cage = 3
@@ -61,17 +65,49 @@ def recuperer_etat(state , id_team , id_player):
     else :
         cage = 0
         
+    lista.add(cage)
     ## Distance de mes cages 
     if Mystate.distance_of_mycage() < 10 :
-        cage = 3
+        m_cage = 3
         
     elif Mystate.distance_of_mycage() < 20 :
-        cage = 2
+        m_cage = 2
         
     elif Mystate.distance_of_mycage() < 30 :
-        cage = 1     
+        m_cage = 1     
     else :
-        cage = 0
+        m_cage = 0
+ 
+    lista.add(m_cage)
+
+    return tuple(lista)
+
+def Q(state,id_team,id_player):
+    
+    s = discretisation(state,id_team,id_player)
+
+    Q[s]=defaultdict(float)
+    Q[s][a] 
+  
+
+def Monte_carlo(Q= None, scenario = [(state,action)...,(state,action)]):
+    
+    R = recompense(senario[-1][0])      
+    if Q is None:
+        Q = dict()
+     
+    for (s,a) in senario[-2::-1]:
+        if s not in Q:
+            Q[s] = defaultdict(float)
+       Q[s][a] = 0
+       
+    for (s,a) in senario[-2::-1]:
+        Q[s][a] = Q[s][a] + alpha*(R-Q[s][a])
+        R = gamma * R +recompense(s)
+        
+    return Q
+       
+        
         
     
     
