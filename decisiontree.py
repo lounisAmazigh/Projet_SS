@@ -11,6 +11,7 @@ import cPickle
 import sys
 from Tools import *
 from collections import defaultdict
+from Player_strat import *
 #bpos.distance(myg)
 
 ## Fonction de generation de descripteurs
@@ -107,7 +108,7 @@ def Monte_carlo(Q= None, scenario = [(state,action)...,(state,action)]):
         
     return Q
        
-        
+       
         
     
     

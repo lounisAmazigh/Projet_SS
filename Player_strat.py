@@ -13,7 +13,7 @@ def foncer(Mystate):
         else :             
             return Mystate.foncer_vers_les_but(2)
             
-    elif Mystate.distance_players_t2(20) :
+    elif Mystate.distance_players_t2(15) :
         return Mystate.foncer_a_gauche(1)
         
     else :
@@ -180,33 +180,35 @@ def deff_gauche(Mystate):
 # MILIEU DE TERRAIN
 def milieu_centre(Mystate):
      
-     if Mystate.position_bal().x > settings.GAME_WIDTH/2  or Mystate.distance_of_bal() < 11 :
+     if Mystate.position_bal().x >= settings.GAME_WIDTH/2  or Mystate.distance_of_bal() < 11 :
          return foncer(Mystate)
          
-     else :
-         return Mystate.suivre_bal_en_y()
+     elif Mystate.position_bal().x  < settings.GAME_WIDTH/4 :
+         return Mystate.avant_poste()
          
+     else : 
+         return Mystate.suivre_bal_en_y()
    
         
 # DEFENSE BASIC T1
 def defenseur1(Mystate):
 
-    if Mystate.pos_ball_DG():
-        return deff_gauche(Mystate)
+    if Mystate.pos_ball_DG() or Mystate.pos_ball_DD():
+        return foncer(Mystate)
         
-    elif Mystate.pos_ball_DD():
-        return deff_gauche_basic(Mystate)
-        
+    elif Mystate.position_bal().x  < settings.GAME_WIDTH/4 :
+         return Mystate.shoot_bal_def()
         
     else :
         if Mystate.position_bal().y == settings.GAME_HEIGHT/2. :
             return Mystate.avant_poste()
         
-        elif Mystate.distance_of_bal() < 11 :
+        elif Mystate.distance_of_bal() < 5 :
             return foncer(Mystate)
             
-        elif Mystate.position_player().x > settings.GAME_WIDTH*3/4 :
-            return Mystate.go_to_the_middle()
+        elif Mystate.position_player().x > settings.GAME_WIDTH*3/4 or Mystate. position_bal().x > settings.GAME_WIDTH*3/4 :
+            return Mystate.avant_poste()
+            
         else : 
             return Mystate.suivre_bal_en_y()
 # GOAL
