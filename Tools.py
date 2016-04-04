@@ -67,6 +67,49 @@ class PlayerStateDecorator :
         else :
             return False
             
+            
+    def joueur_plus_proche(self):
+
+        list1 = 0        
+        for (idt , idp) in self.state.players :
+            if (idt == self.id_team and idp != self.id_player) :
+                if list1 == 0 :
+                    list1 = self.state.player_state(idt , idp).position
+                else :
+                    if self.state.player_state(self.id_team , self.id_player).position.distance(list1) <= self.state.player_state(self.id_team , self.id_player).position.distance(self.state.player_state(idt ,idp).position) :
+                        continue
+                    else:
+                        list1 = self.state.player_state(idt , idp).position 
+                        
+            else :
+                continue
+                         
+           
+            return list1
+         
+         
+    def joueur_plus_proche_adv(self):
+
+        list1 = 0        
+        for (idt , idp) in self.state.players :
+            if (idt != self.id_team) :
+                if list1 == 0 :
+                    list1 = self.state.player_state(idt , idp).position
+                else :
+                    if self.state.player_state(self.id_team , self.id_player).position.distance(list1) <= self.state.player_state(self.id_team , self.id_player).position.distance(self.state.player_state(idt ,idp).position) :
+                        continue
+                    else:
+                        list1 = self.state.player_state(idt , idp).position 
+                        
+            else :
+                continue
+                            
+            return list1       
+            
+            
+            
+            
+            
     def position_attaquant(self):
         for (idt, idp) in self.state.players :
             if idt == self.id_team and idp== 0:
@@ -298,21 +341,56 @@ class PlayerStateDecorator :
                 return SoccerAction(Vector2D() , v)
             else : 
                 return SoccerAction(self.position_bal()-self.position_player(),self.no_shoot())
+                
+    def passe_pour_un_joueur(self):
+        v = Vector2D(self.joueur_plus_proche().x - self.position_player().x , self.joueur_plus_proche().y - self.position_player().y)
+        if(self.can_shoot() == True):
+            return SoccerAction(Vector2D() , v)
+        else : 
+            return SoccerAction(self.position_bal()-self.position_player(),self.no_shoot())
         
         
    
     
     
+    def tirer_au_but(self , s):
+        if self.can_shoot() :
+            v = Vector2D(settings.GAME_WIDTH - self.position_player().x , settings.GAME_HEIGHT/2 - self.position_player().y).normalize().scale(s)
+            return SoccerAction(Vector2D(), v)
+        else : 
+            return SoccerAction(self.position_bal()-self.position_player(),self.no_shoot())
     
     
     
     
+    def vitesse_joueur(self):
+      return self.state.player_state(self.id_team, self.id_player).vitesse
     
-    
-    
-    
-    
-    
+    def normalise_vitesse(self):
+        return self.state.player_state(self.id_team, self.id_player).vitesse.normalize().scale(0)
+
+         
+    def deplacement(self): 
+            if self.proche_a_la_balle():
+                v = Vector2D(self.joueur_plus_proche().x + self.position_player().x ,self.position_player().y  )
+                return self.retour_position(v)
+            else : 
+                return self.suivre_bal()
+                
+                
+        
+    def balle_proche(self):
+        if(self.distance_of_bal() < settings.PLAYER_RADIUS + settings.BALL_RADIUS):
+            return True
+        else :
+            return False
+            
+    def proche_a_la_balle(self):
+        if self.joueur_plus_proche().distance(self.state.ball.position) < ( settings.PLAYER_RADIUS + settings.BALL_RADIUS ):
+            return True 
+        else : 
+            return False
+
     
     
     

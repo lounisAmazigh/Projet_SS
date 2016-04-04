@@ -230,19 +230,28 @@ def milieu_def(Mystate):
          return defenseur1(Mystate)
         
 def test1(Mystate):   
+    if Mystate.joueur_plus_proche().x > Mystate.position_player().x :
+        return foncer(Mystate)
     
-    if(Mystate.pos_ball_attaque() == True or Mystate.pos_ball_milieu()) :
-        if Mystate.distance_players_t2() or Mystate.ball_is_goal_t2() : # True
-            return Mystate.shoot_to_cage_t1(5)
-        else:
-            return Mystate.go_to_cage_with_ball()    
-            
-    else : 
-            return Mystate.go_to_the_middle()
+    else :
+        return Mystate.tirer_au_but(5)
     
  
+
+
+def Passe(Mystate):  
+    if  Mystate.vitesse_joueur().norm > 0.01:
+        return Mystate.normalise_vitesse()
+    elif Mystate.balle_proche():
+        return Mystate.passe_pour_un_joueur()
+  
+    else :
+        return Mystate.deplacement()
         
+   
         
+  
+    
         
         
         

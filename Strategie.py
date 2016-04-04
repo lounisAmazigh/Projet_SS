@@ -21,6 +21,8 @@ class Strat(BaseStrategy):
             Mystate = PlayerStateDecorator(s_miroir,id_team , id_player)
             return miroir_sa(self.comportement(Mystate))
     
+    
+    
 keyatt = KeyboardStrategy()
 keygoal = KeyboardStrategy()
 keydef = KeyboardStrategy()
@@ -41,7 +43,7 @@ att_def_droit = Strat(marcelo , "att_def_droit")
 def_gauche = Strat(deff_gauche , "3")
 foncer = Strat(foncer , "9")
 tire_alea = Strat(tire_aleatoire,"tire_alea")
-
+PasseStrategy = Strat(Passe , "passe")
 
 #BASIC 
 att_droit_basic = Strat(attaquant_droit_basic , "att_droit")
