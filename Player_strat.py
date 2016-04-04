@@ -240,9 +240,7 @@ def test1(Mystate):
 
 
 def Passe(Mystate):  
-    if  Mystate.vitesse_joueur().norm > 0.01:
-        return Mystate.normalise_vitesse()
-    elif Mystate.balle_proche():
+    if  Mystate.vitesse_joueur().norm < 0.01:
         return Mystate.passe_pour_un_joueur()
   
     else :

@@ -57,9 +57,9 @@ class PADState(SoccerState):
 team2= SoccerTeam("T1",[Player("1", PasseStrategy),Player("2",PasseStrategy)])
 team4= SoccerTeam("T1",[Player("1", PasseStrategy),Player("2",PasseStrategy),Player("3",PasseStrategy),
                             Player("4",PasseStrategy)])
-team1 = SoccerTeam("T2",[Player("1", FonceurStrategy)])
-team3 = SoccerTeam("T2",[Player("1", Foncer),Player("2", Foncer),
-                        Player("3",FonceurStrategy)])
+team1 = SoccerTeam("T2",[Player("1", foncer)])
+team3 = SoccerTeam("T2",[Player("1", foncer),Player("2", foncer),
+                        Player("3",foncer)])
 
 match = SoccerMatch(team2,team1,init_state=PADState.create_initial_state(2,1))
 show(match)
