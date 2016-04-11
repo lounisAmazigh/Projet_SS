@@ -23,6 +23,7 @@ class PlayerIA :
         self.suivre =0
         self.tirer =0
         self.avancer = 0
+        self.Q = ....
         
         
     def descritisation(self):
@@ -81,41 +82,60 @@ class PlayerIA :
         return tuple(lista)
 
     def Q(self):
-    
+        Q = dict()
         s = discretisation(self.state,self.id_team,self.id_player)
 
         Q[s]=defaultdict(float)
-        #choisire une action au hasard 
-      #  a = choisire action 
+        #choisir une action au hasard 
+      #  a = choisir action 
         Q[s][a] 
         return Q 
   
     # INFO SUR L'ETAT :
   
-    def info_etat()
-    def recompense(self,etat,action):
+    def info_etat():
+        
+    def recompense(self,etat):
+     
+        #si il marque  : +1000
+
+        #si il recupère la balle : +200 
+        
+        #si il fait un passe réussite : +500
+
+        #si il rate le cadre :-500
+
+        #si il perd le ballon  : -250
+    
+        #si il rate un passe : -100
         
         
     
 
-    def Monte_carlo(Q= None, scenario = [(state,action)...,(state,action)]):
+    def Monte_carlo(self, scenario = [(state,action)...,(state,action)]):
     
         R = recompense(senario[-1][0])      
-        if Q is None:
-            Q = dict()
+      #  if Q is None:
+       #     Q = dict()
      
         for (s,a) in senario[-2::-1]:
             if s not in Q:
-                Q[s] = defaultdict(float)
-                Q[s][a] = 0
+                # descritisation 
+                s = discretisation(self.state,self.id_team,self.id_player)
+                self.Q[s] = defaultdict(float)
+                self.Q[s][a] = 0
        
         for (s,a) in senario[-2::-1]:
-            Q[s][a] = Q[s][a] + alpha*(R-Q[s][a])
+            self.Q[s][a] = self.Q[s][a] + alpha*(R-self.Q[s][a])
             R = gamma * R +recompense(s)
         
-        return Q
+
     
-    
+     ### créer une fonction jouer qui retourne la meilleure action du dictionnaire 
+    # rajouter un compute strategie 
+        
+    def jouer(self):
+        
     
     
     
