@@ -8,9 +8,9 @@ import os
 
 team1 = SoccerTeam("JSK",[Player("10",test)])
 
-team2 = SoccerTeam("JSK",[Player("10",goal_strat)])
+#team2 = SoccerTeam("JSK",[Player("10",goal_strat)])
 
-#team2 = SoccerTeam("JSK",[Player("9",milieu) , Player("4",defense_Strategy)])
+team2 = SoccerTeam("JSK",[Player("9",milieu) , Player("4",defense_Strategy)])
 
 team4 = SoccerTeam("JSK",[Player("9",attaquant_gauche),Player("4",def_gauche),Player("7",att_def_droit),Player("1",goal_strat)])
 
